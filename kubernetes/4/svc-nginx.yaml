@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: delpoy-yml
+        namespace: 4lquan
+spec:
+        selector:
+                matchLabels:
+                        run: nginx-con-yml
+        template:
+                metadata:
+                        labels:
+                                run: nginx-con-yml
+                spec:
+                        containers:
+                        - image: nginx:1.17.1
+                          name: nginx-con-name
+                          ports:
+                          - containerPort: 80
+                            protocol: TCP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+        name: svc-node-yml
+        namespace: 4lquan
+        labels:
+                version: "1.0"
+spec:
+        clusterIP: 10.98.68.77 #固定svc的内网地址ip
+        type: ClusterIP
+        selector:
+                run: deploy-yml
+        ports:
+        - port: 80
+          protocol: TCP
+          targetPort: 80

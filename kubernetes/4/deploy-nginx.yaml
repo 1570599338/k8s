@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: deploy-nginx
+        namespace: 4lquan
+spec:
+        replicas: 3
+        selector:
+                matchLabels:
+                        run: nginx-con
+        template:
+                metadata:
+                        labels:
+                             run: nginx-con
+                spec:
+                        containers:
+                        - image: nginx:1.17.2
+                          name: nginx
+                          ports:
+                          - containerPort: 80
+                            protocol: TCP

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deploy
+  namespace: 5lquan
+  labels:
+    app: tomcat-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat-pod
+  template:
+    metadata:
+      name: tomcat-pod-temp
+      labels:
+        app: tomcat-pod
+    spec:
+      containers:
+        - name: tomcat-pod
+          image: tomcat:9.0.20-jre8-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            postStart:
+              exec:
+                command: #["/bin/sh", "-c", "echo 'postStart...Hello World' > /usr/local/tomcat/webapps/ROOT/index.jsp"]
+                  - "/bin/sh"
+                  - "-c"
+                  - "echo 'postStart...lquanXXXX' > /usr/local/tomcat/webapps/ROOT/index.jsp"
+          volumeMounts:  # 挂载volumes
+            - mountPath: /usr/local/tomcat/webapps/ROOT/
+              name: tom-v
+      restartPolicy: Always
+      volumes:  # 声明一个volumes
+        - name: tom-v
+          hostPath:
+            path: /root/work
+            type: DirectoryOrCreate
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-svc
+  namespace: 5lquan
+spec:
+  selector:
+    app: tomcat-pod
+  ports:
+    - port: 8888
+      targetPort: 8080
+      nodePort: 30088
+      protocol: TCP
+  type: NodePort

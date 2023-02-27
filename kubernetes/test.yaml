@@ -1,37 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: 
-  labels:
-    app: 
-spec:
-  replicas: 1
-  template:
-    metadata:
-      name: 
-      labels:
-        app: 
-    spec:
-      containers:
-        - name: 
-          image: 
-          imagePullPolicy: IfNotPresent
-      restartPolicy: Always
-  selector:
-    matchLabels:
-      app: 
-        
-        
----
-
-
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  name: 
+  name: 123
+  labels:
+    app: 123
 spec:
-  selector:
-    app: 
-  ports:
-    - port: 8080
-  type: NodePort  
+  containers:
+    - name: 123
+      image: nginx:1.17.1
+      imagePullPolicy: IfNotPresent
+  restartPolicy: Always

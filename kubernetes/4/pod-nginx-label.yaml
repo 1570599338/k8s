@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+        name: pod-label
+        namespace: 4lquan
+        labels:
+                version: xxx
+                env: test
+spec:
+        containers:
+        - image: nginx:latest
+          name: pod-con
+          ports:
+          - name: nginx-pod
+            containerPort: 80
+            protocol: TCP
