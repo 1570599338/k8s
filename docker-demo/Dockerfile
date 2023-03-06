@@ -15,7 +15,7 @@ VOLUME /tmp
 # 将宿主机目录下的文件拷贝进镜像且会自动处理URL和解压tar压缩包
 #ADD ./target/docker-demo-0.0.1-SNAPSHOT.jar /lquanDocker.jar
 
-ADD  docker-demo-0.0.1-SNAPSHOT.jar /lquandocker.jar
+ADD  ./target/docker-demo-0.0.1-SNAPSHOT.jar /lquandocker.jar
 
 #运行jar包
 RUN bash -c 'touch  /lquandocker.jar'

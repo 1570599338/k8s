@@ -28,4 +28,9 @@ public class OrderController {
     public String index() {
         return " 服务端口号 : " + " \t " + port + " \t " +UUID.randomUUID().toString();
     }
+
+    @RequestMapping (value = "/" ,method = RequestMethod.GET )
+    public String getPort() {
+        return " 服务端口号 : " + " \t " + port + " \t " +UUID.randomUUID().toString()+"其他端口url地址：/order/docker     /order/index";
+    }
 }
