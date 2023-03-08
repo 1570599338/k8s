@@ -1,0 +1,19 @@
+# 定向调度  nodeName
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+  
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nodename
+  namespace: 5lquan
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+  nodeName: k8s-node01    #指定调度到k8s-node01节点上
+
+

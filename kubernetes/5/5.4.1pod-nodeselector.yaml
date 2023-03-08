@@ -1,0 +1,20 @@
+#定向调度 nodeSelector
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name:  pod-nodeselector
+  namespace: 5lquan
+spec:
+  containers:
+    - name:  nginx
+      image: nginx:1.17.1
+  nodeSelector:
+    nodeenv: test  # 指定调度到具有nodeenv=test节点上 k8s-node02上
+

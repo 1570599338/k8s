@@ -1,0 +1,28 @@
+# 创建一个5lquan的namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+# 镜像拉取策略
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-imagepullpolicy
+  namespace: 5lquan
+  labels:
+    app: 
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+      imagePullPolicy: Never #设置镜像拉去策略
+    - name: busybox
+      image: busybox:1.30
+
+# imagePullPolicy，用于设置镜像拉取策略，kubernetes支持配置三种拉取策略：
+#     Always：总是从远程仓库拉取镜像（一直远程下载）
+#     IfNotPresent：本地有则使用本地镜像，本地没有则从远程仓库拉取镜像（本地有就本地 本地没远程下载）
+#     Never：只使用本地镜像，从不去远程仓库拉取，本地没有就报错 （一直使用本地）
+

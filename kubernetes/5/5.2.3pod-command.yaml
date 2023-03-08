@@ -1,0 +1,37 @@
+# 创建一个5lquan的namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+#5.2.3 启动命令
+#在前面的案例中，一直有一个问题没有解决，就是的busybox容器一直没有成功运行，那么到底是什么原因导致这个容器的故障呢？
+#原来busybox并不是一个程序，而是类似于一个工具类的集合，kubernetes集群启动管理后，它会自动关闭。
+#解决方法就是让其一直在运行，这就用到了command配置。
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-command
+  namespace: 5lquan
+  labels:
+    app:  pod-command-app
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+    - name: busybox
+      image: busybox:1.30
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "touch /tmp/hello.txt;while true;do /bin/echo $(date +%T) >> /tmp/hello.txt; sleep 3; done;"
+
+
+
+
+
+
+
+
+

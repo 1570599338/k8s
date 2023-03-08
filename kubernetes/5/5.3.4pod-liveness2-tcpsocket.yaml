@@ -1,0 +1,25 @@
+# 容器探测---TCPSocket方式
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+  
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-liveness-tcpsocket
+  namespace: 5lquan
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+      ports:
+        - name: nginx-port
+          containerPort: 80
+      livenessProbe:
+        tcpSocket:
+          port: 8080  # 尝试访问8080端口  # 当然接下来，可以修改成一个可以访问的端口，比如80，再试，结果就正常了......
+
+
+

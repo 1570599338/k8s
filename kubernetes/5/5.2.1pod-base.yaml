@@ -1,0 +1,24 @@
+# 创建一个5lquan的namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+# 5.2.1 基本配置
+#定义了一个比较简单Pod的配置，里面有两个容器：
+#nginx：用1.17.1版本的nginx镜像创建，（nginx是一个轻量级web容器）
+# busybox：用1.30版本的busybox镜像创建，（busybox是一个小巧的linux命令集合）
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-base
+  namespace: 5lquan
+  labels:
+    app: pod-base
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+    - name: busybox
+      image: busybox:1.30

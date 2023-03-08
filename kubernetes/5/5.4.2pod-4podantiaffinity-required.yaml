@@ -1,0 +1,22 @@
+#pod亲和性 之PodAntiAffinity（pod反亲和性）
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-podantiaffinity-required
+  namespace: 5lquan
+
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+  affinity:  #亲和性设置
+    podAntiAffinity:  #设置pod亲和性
+      requiredDuringSchedulingIgnoredDuringExecution:  # 硬限制
+        - labelSelector:
+            matchExpressions: # 匹配podenv的值在["pro"]中的标签
+              - key: podenv
+                values:
+                  - "pro"
+                operator: In
+          topologyKey: kubernetes.io/hostname
+

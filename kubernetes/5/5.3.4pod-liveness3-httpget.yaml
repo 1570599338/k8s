@@ -1,0 +1,27 @@
+# 容器探测-- HttpGet
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-liveness-httpget
+  namespace: 5lquan
+  labels:
+    app: pod-liveness-httpget-label
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+      ports:
+        - name: nginx-port
+          containerPort: 80
+      livenessProbe:
+        httpGet:  # 其实就是访问http://127.0.0.1:80/hello
+          port: 80  #端口号
+          scheme: HTTP #支持的协议，HTTP或者HTTPS
+          path: /hello #URI地址 # 当然接下来，可以修改成一个可以访问的路径path，比如/，再试，结果就正常了......
+

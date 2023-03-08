@@ -1,0 +1,23 @@
+#pod调度-污点和容忍之污点
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-toleration
+  namespace: 5lquan
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+  tolerations:  # 添加容忍
+    - key: "tag"   # 要容忍的污点的key
+      operator: "Equal" # 操作符
+      value: "lquan"   # 容忍的污点的value
+      effect: "NoExecute"    # 添加容忍的规则，这里必须和标记的污点规则相同
+
+

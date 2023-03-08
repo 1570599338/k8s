@@ -1,0 +1,24 @@
+#pod亲和性-PodAffinity
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-podaffinity-target
+  namespace: 5lquan
+  labels:
+    podenv: pro #设置标签
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+  nodeName: k8s-node01
+
+
+
+
+

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 5lquan
+
+
+---
+#资源配额
+ # limits：用于限制运行时容器的最大占用资源，当容器占用资源超过limits时会被终止，并进行重启
+ # requests ：用于设置容器需要的最小资源，如果环境资源不够，容器将无法启动
+
+
+#  在这对cpu和memory的单位做一个说明：
+#       cpu：core数，可以为整数或小数
+#       memory： 内存大小，可以使用Gi、Mi、G、M等形式
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-resources
+  namespace: 5lquan
+  labels:
+    app: pod-resources-label
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+      resources:
+        limits: # 资源请求上限
+          cpu: "2"
+          memory: "2Gi"
+        requests:  #资源请求下限
+          cpu: "1"
+          memory: "1Gi"
+
