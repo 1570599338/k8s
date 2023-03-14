@@ -1,0 +1,32 @@
+#创建deployment  --扩缩容之重建更新
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 6lquan
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pc-deployment
+  namespace: 6lquan
+  labels:
+    app: pc-deployment-label
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-pod-label
+  template:
+    metadata:
+      name:  nginx-pod-name
+      labels:
+        app: nginx-pod-label
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.1
+
+
+  strategy: #  策略
+    type: Recreate # 重建更新      在创建出新的Pod之前会先杀掉所有已存在的Pod

@@ -1,0 +1,30 @@
+#创建deployment
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 6lquan
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pc-deployment
+  namespace: 6lquan
+  labels:
+    app: pc-deployment-label
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-pod-label
+  template:
+    metadata:
+      name:  nginx-pod-name
+      labels:
+        app: nginx-pod-label
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.1
+
+

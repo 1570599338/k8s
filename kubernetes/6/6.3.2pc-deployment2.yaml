@@ -1,0 +1,35 @@
+#创建deployment  --扩缩容之滚动更新
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 6lquan
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pc-deployment
+  namespace: 6lquan
+  labels:
+    app: pc-deployment-label
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-pod-label
+  template:
+    metadata:
+      name:  nginx-pod-name
+      labels:
+        app: nginx-pod-label
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.1
+
+
+  strategy: #  策略
+    type: RollingUpdate # 滚动更新策略  就是启动一部分，就杀死一部分，在更新过程中，存在两个版本的Pod
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
