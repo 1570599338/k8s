@@ -1,0 +1,27 @@
+# namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 7lquan
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pc-deployment
+  namespace: 7lquan
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-pod
+  template:
+    metadata:
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.1
+          ports:
+            - containerPort: 80

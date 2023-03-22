@@ -1,8 +1,9 @@
+# service-headliness
 apiVersion: v1
 kind: Service
 metadata:
   name: service-headliness
-  namespace: test
+  namespace: 7lquan
 spec:
   selector:
     app: nginx-pod

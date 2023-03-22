@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: serice-headliness
+  namespace: 6lquan
+spec:
+  selector:
+    app: nginx-pod
+  ports:
+    - port: 80  #Service的端口
+      targetPort: 80 # Pod的端口
+  type: ClusterIP
+  clusterIP: None # 将clusterIP设置为None，即可创建headliness Service
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pc-statefulset
+  namespace: 6lquan
+  labels:
+    app: nginx-pod
+spec:
+  replicas: 3
+  serviceName: serice-headliness
+  selector:
+    matchLabels:
+      app: nginx-pod
+  template:
+    metadata:
+      name: nginx-pod-name
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.1
+          ports:
+            - containerPort: 80

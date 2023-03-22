@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-https
+  namespace: 7lquan
+spec:
+  tls:
+    - hosts:
+      - nginx.lquan.com
+      - tomcat.lquan.com
+      secretName: tls-secret # 指定秘钥
+  rules:
+    - host: nginx.lquan.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nginx-service
+              servicePort: 80
+
+    - host: tomcat.lquan.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: tomcat-service
+              servicePort: 8080
