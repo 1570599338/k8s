@@ -1,0 +1,45 @@
+# 创建三个pv存储
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1
+spec:
+  capacity:  #存储容量
+    storage: 1Gi
+  accessModes:  #访问类型
+    - ReadWriteMany   #读写权限，可以被多个节点挂载
+  persistentVolumeReclaimPolicy: Retain  # 回收策略
+  nfs:
+    path: /root/data/pv1
+    server: 192.168.254.89
+
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv2
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /root/data/pv2
+    server: 192.168.254.89
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv3
+spec:
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /root/data/pv3
+    server: 192.168.254.89

@@ -1,8 +1,18 @@
+# 创建namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 8lquan
+  labels:
+    app: 8lquan-labels
+
+---
+# 创建一个简单存储emptyDir类型的volumes
 apiVersion: v1
 kind: Pod
 metadata:
         name: volume-emptydir
-        namespace: dev
+        namespace: 8lquan
 spec:
         containers:
         - name: nginx

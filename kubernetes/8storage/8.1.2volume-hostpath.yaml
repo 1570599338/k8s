@@ -1,8 +1,18 @@
+# 创建namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 8lquan
+  labels:
+    app: 8lquan-labels
+
+---
+# 创建hostpath挂载盘
 apiVersion: v1
 kind: Pod
 metadata:
         name: volume-hostpath
-        namespace: dev
+        namespace: 8lquan
 spec:
         containers:
         - name: nginx
