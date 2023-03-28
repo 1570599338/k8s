@@ -1,0 +1,33 @@
+#创建configMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmaplquan
+  namespace: 8lquan
+data:
+  info.log: |
+    userName:lquan
+    password:123456
+
+---
+# 创建pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-pod
+  namespace: 8lquan
+  labels:
+    app: configmap-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.17.1
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /configMap/config
+          name: configxx
+
+  volumes:
+    - name: configxx
+      configMap:
+        name: configmaplquan

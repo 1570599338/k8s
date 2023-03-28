@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap
+  namespace: 8lquan
+data:
+  key:  # 会成为文件名成的
+    aaaa:bbbb
+    cccc:dddd

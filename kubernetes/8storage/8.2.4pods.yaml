@@ -1,0 +1,78 @@
+#创建一个busyBox的pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+  namespace: 8lquan
+  labels:
+    app: pod1
+spec:
+  containers:
+    - name: busybox
+      image: busybox:1.30
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "while true;do echo 8-》pod1 >> /root/pv1/pv1out.txt; sleep 10; done;"
+      volumeMounts:
+        - mountPath: /root/pv1
+          name: volume
+
+  # 创建一个挂载点
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: pvc1
+        readOnly: false
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+  namespace: 8lquan
+  labels:
+    app: pod2
+spec:
+  containers:
+    - name: busybox
+      image: busybox:1.30
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "while true;do echo 8-》pod2pv2 >> /root/pv2/pv2out.txt; sleep 5; done;"
+      volumeMounts:
+        - mountPath: /root/pv2
+          name: volume
+
+        - name: volume3
+          mountPath: /root/pv3/lquanxxx
+
+        - name: volume-nfs
+          mountPath: /root/nfs
+
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/sh", "-c", " echo postStart-》pod2nfs > /root/nfs/nfsout.txt; sleep 5;"]
+
+
+
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: pvc2
+        readOnly: false
+
+    - name: volume3
+      persistentVolumeClaim:
+        claimName: pvc3
+        readOnly: false
+
+    - name: volume-nfs
+      nfs:
+        path: /root/lquan/nfs # nfs服务器地址
+        server: 192.168.254.89 # 共享文件路径
+
