@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eureka-ns  # namespace空间
+
+---
+#创建Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-hl
+  namespace: eureka-ns  # namespace空间
+spec:
+  selector:
+    app: eureka-app
+    workload.user.cattle.io/workloadselector: apps.statefulset-test-eureka
+  ports:
+    - name: eureka
+      port: 8080
+      protocol: TCP
+      targetPort: 8082
+  type: ClusterIP
+
+---
+#创建pod控制器
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eureka-pod-controller
+  namespace: eureka-ns
+  labels:
+    app: eureka
+    workload.user.cattle.io/workloadselector: apps.statefulset-test-eureka
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eureka-app
+      workload.user.cattle.io/workloadselector: apps.statefulset-test-eureka
+  serviceName:  eureka-hl  # 无头服务名称
+  template:
+    metadata:
+      name: eureka-templ
+      labels:
+        app: eureka-app
+        workload.user.cattle.io/workloadselector: apps.statefulset-test-eureka
+    spec:
+      containers: # 容器信息
+        - name: eureka
+          env:
+          - name: EUREKA_URL
+            #相同的服务内可以简写
+            value:  http://eureka-0.eureka-hl:8082/eureka/,http://eureka-1.eureka-hl:8082/eureka/
+          image: registry.cn-hangzhou.aliyuncs.com/lquan/eureka:v2023301 #镜像
+          imagePullPolicy: Always  #拉取策略
+      restartPolicy: Always  #重启策略
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
