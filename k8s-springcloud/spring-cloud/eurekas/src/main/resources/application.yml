@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: eureka01
+
+eureka:
+  client:
+    #register-with-eureka: false #不把自己作为一个客户端注册到自己身上
+    #fetch-registry: false #不需要从服务端获取注册信息（因为在这里自己就是服务端，而且已经禁用自己注册了）
+    service-url:
+      defaultZone: ${EUREKA_URL:http://127.0.0.1:8081/eureka}

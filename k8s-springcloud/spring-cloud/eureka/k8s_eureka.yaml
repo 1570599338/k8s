@@ -52,7 +52,8 @@ spec:
           - name: EUREKA_URL
             #相同的服务内可以简写
             value:  http://eureka-0.eureka-hl:8082/eureka/,http://eureka-1.eureka-hl:8082/eureka/
-          image: registry.cn-hangzhou.aliyuncs.com/lquan/eureka:v2023301 #镜像
+          image: registry.cn-hangzhou.aliyuncs.com/lquan/eureka:v14 #镜像
+          command: ["/bin/bash", "-ce", "tail -f /dev/null"]
           imagePullPolicy: Always  #拉取策略
       restartPolicy: Always  #重启策略
 
