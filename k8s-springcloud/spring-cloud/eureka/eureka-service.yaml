@@ -1,0 +1,19 @@
+# 创建eureka的Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-up
+  namespace: eureka-ns
+spec:
+  selector:
+    app: eureka-up
+    workload.user.cattle.io/workloadselector: apps.statefulset-test-eureka
+  ports:
+    - name: eureka
+      nodePort: 3001
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+  type: NodePort
+  clusterIP: 10.244.1.173
+  externalTrafficPolicy: Cluster
