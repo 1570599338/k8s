@@ -27,9 +27,8 @@ RUN useradd ${USNAME} -u ${USID}  -g ${USNAME}  -G root,bin -d /${USNAME}
 
 #Copy 将当前执行dockerfile 文件机器上的目录下文件拷贝到容器内的某个目录下，
 # --chown同事给文件设置用户和属组
-ADD  --chown=lquan:lquan   ./target/*.jar /${USNAME}/eurekaDocker.jar
+ADD  --chown=lquan:lquan   ./target/*.jar /${USNAME}/order.jar
 COPY --chown=lquan:lquan   ./bootstrap.sh   /${USNAME}/
-COPY --chown=lquan:lquan   ./initContainer.sh   /${USNAME}/
 
 
 # 设置权限

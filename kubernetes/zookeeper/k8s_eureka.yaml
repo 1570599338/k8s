@@ -114,8 +114,9 @@ spec:
                for (( i=1; i<=$SERVERS; i++ )); do
                   echo "server.$i=$NAME-$((i-1)).$DOMAIN:$SERVER_PORT:$ELECTION_PORT" >> /lquan/zoo.cfg;
                done &&
-               chown -Rv lquan "$ZOO_DATA_DIR" "$ZOO_DATA_LOG_DIR" "$ZOO_LOG_DIR" "$ZOO_CONF_DIR" &&
-               bootstrap.sh
+              #chown -Rv lquan:lquan "$ZOO_DATA_DIR" "$ZOO_DATA_LOG_DIR" "$ZOO_LOG_DIR" "$ZOO_CONF_DIR" &&
+              chown -Rv lquan:lquan "$ZOO_DATA_DIR" "$ZOO_DATA_LOG_DIR" &&
+              sh /lquan/bootstrap.sh
       restartPolicy: Always  #重启策略
 
 
