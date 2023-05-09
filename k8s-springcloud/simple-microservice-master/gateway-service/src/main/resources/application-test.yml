@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #开启以服务id去注册中心上获取转发地址
+          enabled: true
+          ##小写serviceId
+          lower-case-service-id: true
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          filters:
+            - StripPrefix=1
+          predicates:
+            - Path=/product/**
+
+        - id: order-service
+          uri: lb://order-service
+          filters:
+            - StripPrefix=1
+          predicates:
+            - Path=/order/**
+
+        - id: stock-service
+          uri: lb://stock-service
+          filters:
+            - StripPrefix=1
+          predicates:
+            - Path=/stock/**
+
+eureka:
+  instance:
+    prefer-ip-address: true # true：显示ip  false：不显示
+    instance-id: gateway-service80
+
+    lease-renewal-interval-in-seconds: 30  #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+    lease-expiration-duration-in-seconds: 90   #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+
+
+  client:
+    register-with-eureka: true  #表示向注册中心注册自己
+    fetch-registry: true  #表示可以在注册中心被检索到
+    service-url:
+      defaultZone: http://192.168.254.79:8888/eureka

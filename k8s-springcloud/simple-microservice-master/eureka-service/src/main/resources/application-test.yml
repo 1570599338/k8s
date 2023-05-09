@@ -1,0 +1,16 @@
+eureka:
+  server:
+    renewal-percent-threshold: 0.9
+    enable-self-preservation: false    #关闭自我保护机制
+    eviction-interval-timer-in-ms: 40000 #设置清理问题间隔时间
+    peer-node-read-timeout-ms: 2000
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    serviceUrl:
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://192.168.254.79:${server.port}/eureka/
+    fetch-registry: false
+
