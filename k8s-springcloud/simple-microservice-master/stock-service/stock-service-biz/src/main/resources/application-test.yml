@@ -7,7 +7,7 @@ spring:
 
 eureka:
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true # true：显示ip  false：不显示
     instance-id: stock-service8030
 
     lease-renewal-interval-in-seconds: 30  #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
@@ -21,6 +21,3 @@ eureka:
     fetch-registry: true  #表示可以在注册中心被检索到
     service-url:
       defaultZone: http://192.168.254.79:8888/eureka
-
-
-

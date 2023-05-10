@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>simple-microservice</artifactId>
+		<groupId>cn.simple-microservice</groupId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>eureka-service</artifactId>
+
+	<dependencies>
+		<!--SpringCloud eureka-server -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+		</dependency>
+
+		<!--web 模块 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!--undertow容器 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>lquan-maven-k8s</id>
+			<name>RepositoryProxyRel</name>
+			<url>http://127.0.0.1:8081/repository/lquan-maven-k8s/</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>lquan-snapshots</id>
+			<name>lquan snapshots</name>
+			<url>http://127.0.0.1:8081/repository/lquan-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.3.3.RELEASE</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.33.0</version>
+				<configuration>
+					<!-- Docker 远程管理地址-->
+					<dockerHost>http://192.168.254.76:2375</dockerHost>
+					<!-- Docker 推送镜像仓库地址-->
+					<pushRegistry>registry.cn-hangzhou.aliyuncs.com</pushRegistry>
+					<images>
+						<image>
+							<!--由于推送到私有镜像仓库，镜像名需要添加仓库地址-->
+							<name>registry.cn-hangzhou.aliyuncs.com/lquan/simple-eureka:${project.version}</name>
+							<!--定义镜像构建行为-->
+							<build>
+								<!--定义基础镜像-->
+								<from>java:8</from>
+								<args>
+									<JAR_FILE>${project.build}.jar</JAR_FILE>
+								</args>
+								<!--定义哪些文件拷贝到容器中-->
+								<assembly>
+									<!--定义拷贝到容器的目录-->
+									<targetDir>/</targetDir>
+									<!--只拷贝生成的jar包-->
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<!--定义容器启动命令-->
+								<entryPoint>["java", "-jar","/${project.build}.jar"]</entryPoint>
+								<!--定义维护者-->
+								<maintainer>lquan</maintainer>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.254.79:3309/tb_order?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+eureka:
+  instance:
+    prefer-ip-address: true # true：显示ip  false：不显示
+    instance-id: order-service8020
+
+    lease-renewal-interval-in-seconds: 30  #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+    lease-expiration-duration-in-seconds: 90   #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+
+  client:
+    register-with-eureka: true  #表示向注册中心注册自己
+    fetch-registry: true  #表示可以在注册中心被检索到
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka
+
+
+
